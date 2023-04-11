@@ -3,11 +3,18 @@ import videos from "../models/Video.js";
 
 class VideoController{
 
-    static listarVideos = (req,res) =>{
-        videos.find((err,videos)=>{
-            res.json(videos)
-    })
-
+  static listarVideos = (req, res) => {
+    videos
+      .find()
+      .populate('creator')
+      .exec((err, videos) => {
+        if (err) {
+          return res.status(500).json({
+            error: err.message
+          });
+        }
+        return res.json(videos);
+      });
   }
 
   static cadastrarVideo = (req,res)=>{
@@ -35,7 +42,10 @@ class VideoController{
   }
   static listarPorId = (req,res)=>{
     const id  = req.params.id
-    videos.findById(id, (err,videos)=>{
+    
+    videos.findById(id)
+    .populate('creator','nome')
+    .exec((err,videos)=>{
       if (err){
         res.status(400).send({message:`${err.message} ERRO - id not found in search `})
       } else{

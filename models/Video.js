@@ -4,7 +4,7 @@ const videosSchema = new mongoose.Schema(
     {
         id:{type : String},
         title: {type : String,  required: true},
-        creator: { type : String, required: true},
+        creator: { type : mongoose.Schema.Types.ObjectId, ref: 'creator', required: true},
         time: { type : Number}
     }
 )

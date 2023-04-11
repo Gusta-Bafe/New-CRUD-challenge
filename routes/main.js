@@ -1,5 +1,8 @@
 import  express  from 'express';
 import videos from  './videosRoutes.js';
+import creator from './creatorsRoutes.js';
+
+
 
 
 
@@ -10,7 +13,8 @@ const routes = (app)=>{
 
     app.use(
         express.json(),
-        videos
+        videos,
+        creator
     )
 }
 export default routes;
